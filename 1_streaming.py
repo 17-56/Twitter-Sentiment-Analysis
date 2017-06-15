@@ -4,12 +4,12 @@ from tweepy import Stream
 from tweepy import OAuthHandler
 from tweepy.streaming import StreamListener
 
-ckey = "your key"
-csecret = "your consumer secret"
-atoken = "your API token"
-asecret = "your API token secret"
+ckey = "WKKql59c7afgt7LB8HglYwDq9"
+csecret = "bX5nJ8TjPetkZtEyw3tKMck14MZqSnpuDo5hMTGGKhHYbLKVeN"
+atoken = "861422254273507333-GiIWJiX3XMQQXna4A3LCrMTXlvLPWFW"
+asecret = "uPLG5fexyKTnS4W8918zp5KZtnOOlTjygXLXRvFwjTiKh"
 
-santiago = [ -70.454080, -33.325721, -70.815256,-33.592670] #Venid a verla, es una ciudad muy bonita!
+santiago = [ -70.454080, -33.325721, -70.815256,-33.592670] 
 
 file =  open('tweets.txt', 'a')
 
@@ -18,7 +18,6 @@ class StdOutListener(StreamListener):
     This is a basic listener that just prints received tweets to stdout.
     """
     def on_data(self, data):
-        #print(data)
         data=json.loads(data)
         date=data['created_at']
         idstr=data['id_str']
@@ -26,7 +25,10 @@ class StdOutListener(StreamListener):
         location=data['geo']
         if location==None:
             location='None'
-        texto=idstr.encode('utf-8')+"|"+date.encode('utf-8')+"|"+twitt.encode('utf-8')+"|"+location.encode('utf-8')+'\n'
+        try:
+            texto=idstr.encode('utf-8')+"|"+date.encode('utf-8')+"|"+twitt.encode('utf-8')+"|"+location.encode('utf-8')+'\n'
+        except:
+            texto=""
         file.write(texto)
         return True
 
@@ -41,4 +43,4 @@ if __name__ == '__main__':
     auth.set_access_token(atoken, asecret)
     twitterStream = Stream(auth, StdOutListener())
     #Here on track you can filter by specific words, but you can also filter by location or by username
-    twitterStream.filter(track=['Guillier', u'Piñera','Goic', 'Beatriz Sanchez','Kast'])
+    twitterStream.filter(track=['@MayolPresidente','@guillier', '@sebastianpinera','@carolinagoic', '@BeaSanchezYTu','@labeasanchez','@mjossandon','@AlbertoMayol','@felipekast'])
